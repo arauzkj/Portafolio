@@ -145,6 +145,10 @@ export const ui = {
     "login.password": "Contraseña",
     "login.submit": "Iniciar sesión",
 
+    // dashboard
+    "dashboard.title": "Dashboard",
+    "dashboard.description": "Bienvenido a tu dashboard, aquí puedes gestionar tu contenido y ver analíticas.",
+
   },
   en: {
     "nav.home": "Home",
@@ -279,6 +283,11 @@ export const ui = {
     "login.username": "Username",
     "login.password": "Password",
     "login.submit": "Submit",
+
+    // dashboard
+    "dashboard.title": "Dashboard",
+    "dashboard.description": "Welcome to your dashboard, here you can manage your content and view analytics.",
+
   },
 } as const;
 
