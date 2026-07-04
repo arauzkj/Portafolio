@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from "@tailwindcss/vite";
 
+import icon from 'astro-icon';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://arauzdev.netlify.app/',
@@ -13,7 +15,7 @@ export default defineConfig({
       defaultLocale: 'es',
       locales: {'es': 'Español', 'en': 'English'},
     }},
-  )],
+  ), icon()],
   output: 'server',
   vite: {
     plugins: [tailwindcss()],
