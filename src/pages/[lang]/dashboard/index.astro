@@ -1,25 +1,8 @@
 ---
-import Sidebar from "@components/dashboard/Sidebar.astro";
-import { getLangFromUrl, useTranslatedPath, useTranslations } from "@i18n/utils";
-import Layout from "@layouts/Layout.astro";
-
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const translatePath = useTranslatedPath(lang);
-
-
-
-if(!Astro.locals.session){
-  return Astro.redirect(translatePath("/login"));
-}
-
-const user = Astro.locals.user;
-
-export const prerender = false;
+import DashboardLayout from "@layouts/DashboardLayout.astro"
 ---
 
-<Layout title={`${t('dashboard.title')} | ${t('site.title')}`} description={t('dashboard.description')}> 
-  <Sidebar user={user} />
-
-</Layout>
+<DashboardLayout title="Dashboard" description="Panel principal">
+  <h1 class="text-2xl font-semibold text-foreground">Dashboard</h1>
+  <p class="text-muted-foreground">Contenido del dashboard aquí...</p>
+</DashboardLayout>

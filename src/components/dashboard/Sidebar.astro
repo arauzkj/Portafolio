@@ -5,6 +5,8 @@ import {
   useTranslations,
 } from "@i18n/utils";
 
+import { Icon } from "astro-icon/components";
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
@@ -19,8 +21,31 @@ interface Props {
 const { user } = Astro.props;
 
 const navItems = [
-  { label: t("dashboard.title"), href: translatePath("/dashboard") },
-  { label: t("nav.blog"), href: translatePath("/blog") },
+  {
+    label: t("dashboard.title"),
+    href: translatePath("/dashboard"),
+    icon: "lucide:layout-dashboard",
+  },
+  {
+    label: "Estadisticas",
+    href: translatePath("/dashboard"),
+    icon: "mdi:poll-box",
+  },
+  {
+    label: "Publicaciones",
+    href: translatePath("/dashboard/post/edit"),
+    icon: "mdi:post-it-note-edit",
+  },
+  {
+    label: "Nueva Publicacion",
+    href: translatePath("/dashboard/post/new"),
+    icon: "mdi:note-add",
+  },
+  {
+    label: "Configuración",
+    href: translatePath("/dashboard/settings"),
+    icon: "mdi:settings-outline",
+  },
 ];
 
 const userName = user?.name ?? "Admin";
@@ -29,7 +54,7 @@ const userInitial = userName.trim().charAt(0).toUpperCase() || "A";
 ---
 
 <aside
-  class="fixed left-0 top-0 z-40 h-screen w-64 border-r border-sidebar-border bg-sidebar"
+  class="fixed left-0 top-0 z-40 h-screen w-64 border-r border-sidebar-border bg-sidebar/95 backdrop-blur-sm"
 >
   <div class="flex h-full flex-col">
     <div class="flex h-16 items-center border-b border-sidebar-border px-6">
@@ -37,11 +62,9 @@ const userInitial = userName.trim().charAt(0).toUpperCase() || "A";
         <div
           class="flex h-8 w-8 items-center justify-center rounded-md bg-accent"
         >
-          <i class="h-4 w-4 text-accent-foreground"></i>
+          <Icon name="mdi:blog-outline" />
         </div>
-        <span class="text-lg font-semibold text-sidebar-foreground">
-          Blog CMS
-        </span>
+        <span class="text-lg font-semibold text-sidebar-foreground"> CMS </span>
       </a>
     </div>
 
@@ -64,6 +87,7 @@ const userInitial = userName.trim().charAt(0).toUpperCase() || "A";
                   : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
               ]}
             >
+              <Icon class="h-4 w-4" name={item.icon} />
               {item.label}
             </a>
           );
