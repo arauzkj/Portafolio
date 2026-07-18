@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^8.1.2",
     "@astrojs/sitemap": "^3.7.3",
     "@better-auth/drizzle-adapter": "^1.6.23",
     "@iconify-json/lucide": "^1.2.116",
