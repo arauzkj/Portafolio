@@ -1,0 +1,36 @@
+---
+import Sidebar from "@components/dashboard/Sidebar.astro";
+import {
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
+} from "@i18n/utils";
+import Layout from "@layouts/Layout.astro";
+import { ClientRouter } from "astro:transitions";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+if (!Astro.locals.session) {
+  return Astro.redirect(translatePath("/login"));
+}
+
+const user = Astro.locals.user;
+
+export const prerender = false;
+---
+
+<Layout
+  title={`${t("dashboard.title")} | ${t("site.title")}`}
+  description={t("dashboard.description")}
+>
+  <ClientRouter />
+
+  <div class="flex">
+    <Sidebar user={user} />
+    <main class="ml-64 min-h-screen flex-1 p-8" transition:animate="fade">
+      <slot />
+    </main>
+  </div>
+</Layout>
