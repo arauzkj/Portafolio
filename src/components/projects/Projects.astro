@@ -4,10 +4,30 @@ import {
   useTranslations,
   useTranslatedPath,
 } from "@i18n/utils";
+import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
+
+const techIcons = {
+  Astro: "devicon:astro",
+  React: "devicon:react",
+  "Next.js": "devicon:nextjs",
+  TypeScript: "devicon:typescript",
+  JavaScript: "devicon:javascript",
+  Java: "devicon:java",
+  Python: "devicon:python",
+  Flutter: "devicon:flutter",
+  Dart: "devicon:dart",
+  Tailwind: "devicon:tailwindcss",
+  "Tailwind CSS": "devicon:tailwindcss",
+  CSS: "devicon:css3",
+  HTML: "devicon:html5",
+  PostgreSQL: "devicon:postgresql",
+  Docker: "devicon:docker",
+  Git: "devicon:git",
+};
 
 const featuredProjects = [
   {
@@ -160,12 +180,17 @@ const pendingProjects = [
                 {project.description}
               </p>
 
-              <ul class="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech) => (
-                  <li class="px-2.5 py-1 rounded-full text-[11px] font-mono text-primary bg-primary/10 border border-primary/20">
-                    {tech}
-                  </li>
-                ))}
+              <ul class="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => {
+                  const icon = techIcons[tech as keyof typeof techIcons];
+
+                  return (
+                    <li class="flex items-center gap-2">
+                      {icon && <Icon name={icon} class="w-4 h-4" />}
+                      {tech}
+                    </li>
+                  );
+                })}
               </ul>
 
               <div class="flex items-center gap-4">
