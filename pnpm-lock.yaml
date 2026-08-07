@@ -9,37 +9,40 @@ importers:
   .:
     dependencies:
       '@astrojs/netlify':
-        specifier: ^8.1.2
+        specifier: ^8.1.3
         version: 8.1.3(@types/node@26.1.2)(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@netlify/blobs@10.7.12(supports-color@7.2.0))(@types/node@26.1.2)(jiti@2.7.0)(tsx@4.23.8)(yaml@2.9.0))(jiti@2.7.0)(supports-color@7.2.0)(tsx@4.23.8)(yaml@2.9.0)
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
       '@better-auth/drizzle-adapter':
-        specifier: ^1.6.23
+        specifier: ^1.6.26
         version: 1.6.26(@better-auth/core@1.6.26(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@opentelemetry/api@1.9.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.8)(kysely@0.29.4)(nanostores@1.4.2))(@better-auth/utils@0.4.2)(drizzle-orm@0.45.2(@electric-sql/pglite@0.3.16)(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))
       '@iconify-json/lucide':
-        specifier: ^1.2.116
+        specifier: ^1.2.121
         version: 1.2.121
       '@libsql/client':
         specifier: ^0.17.4
         version: 0.17.4
       '@tailwindcss/vite':
-        specifier: ^4.3.2
+        specifier: ^4.3.3
         version: 4.3.3(vite@8.2.0(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.8)(yaml@2.9.0))
       astro:
-        specifier: ^7.1.1
+        specifier: ^7.1.6
         version: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@netlify/blobs@10.7.12(supports-color@7.2.0))(@types/node@26.1.2)(jiti@2.7.0)(tsx@4.23.8)(yaml@2.9.0)
       astro-icon:
         specifier: ^1.1.5
         version: 1.1.5(supports-color@7.2.0)
       better-auth:
-        specifier: ^1.6.23
+        specifier: ^1.6.26
         version: 1.6.26(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@electric-sql/pglite@0.3.16)(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))
+      devicon:
+        specifier: ^2.17.0
+        version: 2.17.0
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@electric-sql/pglite@0.3.16)(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4)
       tailwindcss:
-        specifier: ^4.3.2
+        specifier: ^4.3.3
         version: 4.3.3
     devDependencies:
       '@iconify-json/mdi':
@@ -2420,6 +2423,9 @@ packages:
 
   devalue@5.9.0:
     resolution: {integrity: sha512-RWrqdArjvPbsATEhOPUo6Wndc/iWnkWKlhIrdlF3zMMYo/c3CVtoaVAyLtWxz5h8nSlkHzxnzV2uLydPXmtF+A==}
+
+  devicon@2.17.0:
+    resolution: {integrity: sha512-2nKUdjobJlmRSaCHa50PGsVq0VDURnq9gVzQoJggsM/NKN0tLhC/Uq2zmy2pH36Q/1q3gvYwp/GjTgv/R0Ysbg==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -6215,7 +6221,7 @@ snapshots:
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 24.13.3
+      '@types/node': 26.1.2
 
   '@types/triple-beam@1.3.5': {}
 
@@ -7005,6 +7011,8 @@ snapshots:
   dettle@1.0.5: {}
 
   devalue@5.9.0: {}
+
+  devicon@2.17.0: {}
 
   devlop@1.1.0:
     dependencies:
