@@ -1,189 +1,303 @@
 ---
-import { getLangFromUrl, useTranslations, useTranslatedPath } from '@i18n/utils';
+import {
+  getLangFromUrl,
+  useTranslations,
+  useTranslatedPath,
+} from "@i18n/utils";
+import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
+const techIcons = {
+  Astro: "devicon:astro",
+  React: "devicon:react",
+  "Next.js": "devicon:nextjs",
+  TypeScript: "devicon:typescript",
+  JavaScript: "devicon:javascript",
+  Java: "devicon:java",
+  Python: "devicon:python",
+  Flutter: "devicon:flutter",
+  Dart: "devicon:dart",
+  Tailwind: "devicon:tailwindcss",
+  "Tailwind CSS": "devicon:tailwindcss",
+  CSS: "devicon:css3",
+  HTML: "devicon:html5",
+  PostgreSQL: "devicon:postgresql",
+  Docker: "devicon:docker",
+  Git: "devicon:git",
+};
+
 const featuredProjects = [
-	{
-		title: t('projects.featured.1.title'),
-		description: t('projects.featured.1.description'),
-		image: 'https://i.ibb.co/Y768tb7C/Portafolio.png',
-		technologies: ['Astro', 'TypeScript', 'Tailwind CSS', 'JavaScript'],
-		github: 'https://github.com/arauzkj/Portafolio',
-		external: 'https://arauzdev.netlify.app/',
-	},
-	{
-		title: t('projects.featured.2.title'),
-		description: t('projects.featured.2.description'),
-		image: 'https://i.ibb.co/Wr7zvfY/Draw-Together.png',
-		technologies: ['React', 'TypeScript', 'WebSockets'],
-		github: 'https://github.com/arauzkj/DrawTogether-FrontEnd',
-		external: 'https://arauzkj.github.io/DrawTogether-FrontEnd/',
-	},
-	{
-		title: t('projects.featured.3.title'),
-		description: t('projects.featured.3.description'),
-		image: 'https://i.ibb.co/d4bzHpXk/QRNav.png',
-		technologies: ['Flutter', 'Dart', 'Mobile'],
-		github: 'https://github.com/arauzkj/QRNav',
-		external: '#',
-	},
+  {
+    title: t("projects.featured.1.title"),
+    description: t("projects.featured.1.description"),
+    image: "https://arauzdev.netlify.app/preview.webp",
+    technologies: ["Astro", "TypeScript", "Tailwind CSS", "JavaScript"],
+    github: "https://github.com/arauzkj/Portafolio",
+    external: "https://arauzdev.netlify.app/",
+  },
+  {
+    title: t("projects.pending.1.title"),
+    description: t("projects.pending.1.description"),
+    image: "https://jobtraker-phi.vercel.app/og-image.png",
+    technologies: ["React", "Next.js", "Web"],
+    github: "#",
+    external: "https://jobtraker-phi.vercel.app/",
+  },
+  {
+    title: t("projects.featured.2.title"),
+    description: t("projects.featured.2.description"),
+    image: "https://i.ibb.co/Wr7zvfY/Draw-Together.png",
+    technologies: ["React", "TypeScript", "WebSockets"],
+    github: "https://github.com/arauzkj/DrawTogether-FrontEnd",
+    external: "https://arauzkj.github.io/DrawTogether-FrontEnd/",
+  },
+  {
+    title: t("projects.featured.3.title"),
+    description: t("projects.featured.3.description"),
+    image: "https://i.ibb.co/d4bzHpXk/QRNav.png",
+    technologies: ["Flutter", "Dart", "Mobile"],
+    github: "https://github.com/arauzkj/QRNav",
+    external: "#",
+  },
+  {
+    title: t("projects.featured.4.title"),
+    description: t("projects.featured.4.description"),
+    image:
+      "https://opengraph.githubassets.com/1/arauzkj/GeminiFlow-ChromeExtension",
+    technologies: ["TypeScript", "JavaScript", "Chrome Extension"],
+    github: "https://github.com/arauzkj/GeminiFlow-ChromeExtension",
+    external: "https://github.com/arauzkj/GeminiFlow-ChromeExtension",
+  },
+  {
+    title: t("projects.featured.5.title"),
+    description: t("projects.featured.5.description"),
+    image: "https://opengraph.githubassets.com/1/arauzkj/GreenDrive",
+    technologies: ["Flutter", "Dart", "Mobile"],
+    github: "https://github.com/arauzkj/GreenDrive",
+    external: "https://github.com/arauzkj/GreenDrive",
+  },
+  {
+    title: t("projects.featured.6.title"),
+    description: t("projects.featured.6.description"),
+    image: "https://opengraph.githubassets.com/1/arauzkj/PyTorrent",
+    technologies: ["Python", "Sockets", "P2P"],
+    github: "https://github.com/arauzkj/PyTorrent",
+    external: "https://github.com/arauzkj/PyTorrent",
+  },
+  {
+    title: t("projects.featured.7.title"),
+    description: t("projects.featured.7.description"),
+    image: "https://opengraph.githubassets.com/1/arauzkj/Proyecto-CuboRubik",
+    technologies: ["Java", "OOP", "CSS"],
+    github: "https://github.com/arauzkj/Proyecto-CuboRubik",
+    external: "https://github.com/arauzkj/Proyecto-CuboRubik",
+  },
 ];
 
 const pendingProjects = [
-	{
-		title: t('projects.pending.1.title'),
-		description: t('projects.pending.1.description'),
-		image: 'https://i.ibb.co/gYZB94c/Markdown-Previewer.png',
-		technologies: ['React', 'JavaScript', 'Marked.js', 'CSS3'],
-		github:
-			'https://github.com/arauzkj/Practicas-FreeCodeCamp-FrontEndDevelopmentLibraries/tree/main/Markdown%20Previewer',
-		external:
-			'https://arauzkj.github.io/Practicas-FreeCodeCamp-FrontEndDevelopmentLibraries/Markdown%20Previewer/',
-	},
+  {
+    title: t("projects.pending.1.title"),
+    description: t("projects.pending.1.description"),
+    image: "https://jobtraker-phi.vercel.app/og-image.png",
+    technologies: ["React", "Next.js", "Web"],
+    github: "#",
+    external: "https://jobtraker-phi.vercel.app/",
+  },
+  {
+    title: t("projects.pending.2.title"),
+    description: t("projects.pending.2.description"),
+    image: "https://arauzdev.netlify.app/preview.webp",
+    technologies: ["Astro", "TypeScript", "Tailwind CSS", "JavaScript"],
+    github: "arauzkj/Portafolio",
+    external: "https://arauzdev.netlify.app/",
+  },
 ];
 ---
 
 <section id="projects" class="relative py-24 md:py-32 px-6 overflow-hidden">
-	<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(100,255,218,0.08),transparent_55%)]"></div>
-	<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(100,255,218,0.06),transparent_55%)]"></div>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(100,255,218,0.08),transparent_55%)]"
+  >
+  </div>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(100,255,218,0.06),transparent_55%)]"
+  >
+  </div>
 
-	<div class="relative max-w-6xl mx-auto">
-		<div class="reveal mb-10">
-			<a
-				href={translatePath('/')}
-				class="fx-btn fx-btn--ghost px-4 py-2 font-mono text-xs"
-			>
-				<span aria-hidden="true">&larr;</span>
-				{t('projects.page.backHome')}
-			</a>
-		</div>
+  <div class="relative max-w-6xl mx-auto">
+    <div class="reveal mb-10">
+      <a
+        href={translatePath("/")}
+        class="fx-btn fx-btn--ghost px-4 py-2 font-mono text-xs"
+      >
+        <span aria-hidden="true">&larr;</span>
+        {t("projects.page.backHome")}
+      </a>
+    </div>
 
-		<div class="reveal mb-14">
-			<p class="font-mono text-primary text-sm mb-3">{t('projects.page.kicker')}</p>
-			<h1 class="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-				{t('projects.page.title')}
-			</h1>
-			<p class="max-w-2xl text-muted-foreground leading-relaxed">
-				{t('projects.page.description')}
-			</p>
-		</div>
+    <div class="reveal mb-14">
+      <p class="font-mono text-primary text-sm mb-3">
+        {t("projects.page.kicker")}
+      </p>
+      <h1
+        class="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4"
+      >
+        {t("projects.page.title")}
+      </h1>
+      <p class="max-w-2xl text-muted-foreground leading-relaxed">
+        {t("projects.page.description")}
+      </p>
+    </div>
 
-		<div class="grid gap-6 md:grid-cols-3 mb-16">
-			{featuredProjects.map((project, index) => (
-				<article
-					class="group rounded-xl border border-border bg-card/70 overflow-hidden hover:-translate-y-1 hover:border-primary/45 transition-all duration-300 reveal"
-					style={`transition-delay: ${100 + index * 70}ms;`}
-				>
-					<div class="aspect-video overflow-hidden">
-						<img
-							src={project.image}
-							alt={project.title}
-							class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-							loading="lazy"
-							decoding="async"
-						/>
-					</div>
+    <div class="grid gap-6 md:grid-cols-3 mb-16">
+      {
+        featuredProjects.map((project, index) => (
+          <article
+            class="group rounded-xl border border-border bg-card/70 overflow-hidden hover:-translate-y-1 hover:border-primary/45 transition-all duration-300 reveal"
+            style={`transition-delay: ${100 + index * 70}ms;`}
+          >
+            <div class="aspect-video overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
 
-					<div class="p-5">
-						<p class="font-mono text-[11px] uppercase tracking-wider text-primary mb-2">
-							{t('projects.featuredLabel')}
-						</p>
-						<h2 class="text-xl font-semibold text-foreground mb-3">{project.title}</h2>
-						<p class="text-sm text-muted-foreground leading-relaxed mb-4">{project.description}</p>
+            <div class="p-5">
+              <p class="font-mono text-[11px] uppercase tracking-wider text-primary mb-2">
+                {t("projects.featuredLabel")}
+              </p>
+              <h2 class="text-xl font-semibold text-foreground mb-3">
+                {project.title}
+              </h2>
+              <p class="text-sm text-muted-foreground leading-relaxed mb-4">
+                {project.description}
+              </p>
 
-						<ul class="flex flex-wrap gap-2 mb-4">
-							{project.technologies.map((tech) => (
-								<li class="px-2.5 py-1 rounded-full text-[11px] font-mono text-primary bg-primary/10 border border-primary/20">
-									{tech}
-								</li>
-							))}
-						</ul>
+              <ul class="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => {
+                  const icon = techIcons[tech as keyof typeof techIcons];
 
-						<div class="flex items-center gap-4">
-							<a
-								href={project.github}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-muted-foreground hover:text-primary transition-colors"
-								aria-label={t('projects.aria.github')}
-							>
-								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-									<path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-								</svg>
-							</a>
-							<a
-								href={project.external}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-muted-foreground hover:text-primary transition-colors"
-								aria-label={t('projects.aria.live')}
-							>
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-								</svg>
-							</a>
-						</div>
-					</div>
-				</article>
-			))}
-		</div>
+                  return (
+                    <li class="flex items-center gap-2">
+                      {icon && <Icon name={icon} class="w-4 h-4" />}
+                      {tech}
+                    </li>
+                  );
+                })}
+              </ul>
 
-		<div class="reveal mb-8">
-			<h2 class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-foreground">
-				<span class="font-mono text-primary text-lg md:text-xl">04.</span>
-				{t('projects.page.pendingTitle')}
-				<span class="flex-1 h-px bg-border max-w-xs"></span>
-			</h2>
-		</div>
+              <div class="flex items-center gap-4">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label={t("projects.aria.github")}
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href={project.external}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label={t("projects.aria.live")}
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
 
-		<div class="grid gap-6 md:grid-cols-2">
-			{pendingProjects.map((project, index) => (
-				<article
-					class="rounded-xl border border-border bg-card/75 p-5 reveal"
-					style={`transition-delay: ${250 + index * 80}ms;`}
-				>
-					<div class="aspect-video rounded-lg overflow-hidden mb-4">
-						<img
-							src={project.image}
-							alt={project.title}
-							class="h-full w-full object-cover"
-							loading="lazy"
-							decoding="async"
-						/>
-					</div>
+    <div class="reveal mb-8">
+      <h2
+        class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-foreground"
+      >
+        <span class="font-mono text-primary text-lg md:text-xl">04.</span>
+        {t("projects.page.pendingTitle")}
+        <span class="flex-1 h-px bg-border max-w-xs"></span>
+      </h2>
+    </div>
 
-					<h3 class="text-xl font-semibold text-foreground mb-2">{project.title}</h3>
-					<p class="text-muted-foreground text-sm leading-relaxed mb-4">{project.description}</p>
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        pendingProjects.map((project, index) => (
+          <article
+            class="rounded-xl border border-border bg-card/75 p-5 reveal"
+            style={`transition-delay: ${250 + index * 80}ms;`}
+          >
+            <div class="aspect-video rounded-lg overflow-hidden mb-4">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
 
-					<ul class="flex flex-wrap gap-2 mb-4">
-						{project.technologies.map((tech) => (
-							<li class="font-mono text-xs text-muted-foreground">{tech}</li>
-						))}
-					</ul>
+            <h3 class="text-xl font-semibold text-foreground mb-2">
+              {project.title}
+            </h3>
+            <p class="text-muted-foreground text-sm leading-relaxed mb-4">
+              {project.description}
+            </p>
 
-					<div class="flex items-center gap-3">
-						<a
-							href={project.github}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="fx-btn px-4 py-2 text-xs"
-						>
-							GitHub
-						</a>
-						<a
-							href={project.external}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="fx-btn fx-btn--ghost px-4 py-2 text-xs"
-						>
-							Demo
-						</a>
-					</div>
-				</article>
-			))}
-		</div>
-	</div>
+            <ul class="flex flex-wrap gap-2 mb-4">
+              {project.technologies.map((tech) => (
+                <li class="font-mono text-xs text-muted-foreground">{tech}</li>
+              ))}
+            </ul>
+
+            <div class="flex items-center gap-3">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="fx-btn px-4 py-2 text-xs"
+              >
+                GitHub
+              </a>
+              <a
+                href={project.external}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="fx-btn fx-btn--ghost px-4 py-2 text-xs"
+              >
+                Demo
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
 </section>

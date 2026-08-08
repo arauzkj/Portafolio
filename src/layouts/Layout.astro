@@ -57,9 +57,9 @@ const { title, description, image, type, publishedDate } = Astro.props;
         
         if (header) {
           if (currentScroll > 50) {
-            header.classList.add('bg-background/80', 'backdrop-blur-md', 'border-b', 'border-border');
+            header.classList.add('bg-background/95', 'backdrop-blur-xs', 'border-b', 'border-border', 'shadow-sm', 'bg-black/50');
           } else {
-            header.classList.remove('bg-background/80', 'backdrop-blur-md', 'border-b', 'border-border');
+            header.classList.remove('bg-background/95', 'backdrop-blur-xs', 'border-b', 'border-border', 'shadow-sm', 'bg-black/50');
           }
         }
         

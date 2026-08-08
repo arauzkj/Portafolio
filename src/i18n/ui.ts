@@ -91,15 +91,27 @@ export const ui = {
     "projects.archiveLink": "ver archivo",
     "projects.aria.github": "Ver código en GitHub",
     "projects.aria.live": "Ver proyecto en vivo",
-    "projects.featured.1.title": "Plataforma E-commerce",
+    "projects.featured.1.title": "Portafolio personal",
     "projects.featured.1.description":
-      "Un sitio de portafolio moderno y responsive que muestra mis habilidades y proyectos. Construido con Astro para rendimiento óptimo e incluye animaciones suaves, soporte de modo oscuro y una sección completa de proyectos.",
+      "Un sitio web de portafolio moderno y responsivo que muestra mis habilidades y proyectos. Construido con Astro para un rendimiento óptimo e incluye animaciones suaves, soporte de modo oscuro y una sección completa de proyectos.",
     "projects.featured.2.title": "DrawTogether",
     "projects.featured.2.description":
       "Aplicación colaborativa de dibujo en tiempo real construida con React, TypeScript y WebSockets. Los usuarios pueden crear o unirse a salas y colaborar sobre un lienzo compartido.",
     "projects.featured.3.title": "QRNav",
     "projects.featured.3.description":
       "QRNav es una aplicación Flutter para escanear códigos QR e interactuar rápidamente con su contenido. Permite trabajar con URLs, contactos, ubicaciones, correos, eventos de calendario o texto plano.",
+    "projects.featured.4.title": "GeminiFlow - Extensión para Chrome",
+    "projects.featured.4.description":
+      "Extensión de Chrome para desarrolladores web que integra Gemini y ayuda a resolver errores de código usando cuatro flujos de trabajo para agentes de IA.",
+    "projects.featured.5.title": "GreenDrive - App de carga para vehículos eléctricos",
+    "projects.featured.5.description":
+      "Aplicación móvil Flutter para encontrar estaciones de carga, planificar rutas y conectar con la comunidad de vehículos eléctricos.",
+    "projects.featured.6.title": "PyTorrent System using Python Sockets",
+    "projects.featured.6.description":
+      "Sistema tipo torrent implementado con sockets en Python para compartir archivos en una red peer-to-peer.",
+    "projects.featured.7.title": "Rubik's Cube Simulator",
+    "projects.featured.7.description":
+      "Simulador de cubo de Rubik en Java con interfaz gráfica, movimientos, solución y guardado de progreso.",
     "projects.other.1.title": "ClinicaUNA Management System",
     "projects.other.1.description":
       "Sistema integral de gestión clínica para la Universidad Nacional de Costa Rica. Incluye gestión de pacientes, citas, expedientes médicos y panel administrativo con control de acceso por roles.",
@@ -118,15 +130,18 @@ export const ui = {
     "projects.other.6.title": "Advanced JavaScript Calculator",
     "projects.other.6.description":
       "Calculadora web completa con funciones científicas, memoria e historial. Implementa correctamente el orden de operaciones y manejo de errores.",
-    "projects.pending.1.title": "Live Markdown Previewer",
+    "projects.pending.1.title": "Job Tracker",
     "projects.pending.1.description":
-      "Editor y previsualizador Markdown en tiempo real con resaltado de sintaxis, vista dividida y exportación. Soporta GitHub Flavored Markdown.",
+      "Aplicación web para gestionar vacantes, postulaciones y seguimiento del proceso de contratación con una interfaz clara y enfocada en la productividad.",
     "projects.page.kicker": "Archivo",
     "projects.page.title": "Todos mis proyectos",
     "projects.page.description":
       "Una vista completa de proyectos destacados y trabajos en progreso, manteniendo la misma estética y experiencia de navegación del sitio principal.",
     "projects.page.backHome": "Volver al inicio",
     "projects.page.pendingTitle": "Proyectos en progreso",
+    "projects.pending.2.title": "Portafolio personal",
+    "projects.pending.2.description":
+      "Portafolio moderno y responsive con blog, proyectos y una experiencia de navegación enfocada en rendimiento y accesibilidad.",
     // Contact
     "contact.kicker": "04. ¿Qué sigue?",
     "contact.title": "Ponte en Contacto",
@@ -231,15 +246,27 @@ export const ui = {
     "projects.archiveLink": "view archive",
     "projects.aria.github": "View code on GitHub",
     "projects.aria.live": "View live project",
-    "projects.featured.1.title": "Personal Portfolio",
+    "projects.featured.1.title": "Personal portfolio",
     "projects.featured.1.description":
-      "A modern, responsive portfolio website showcasing my skills and projects. Built with Astro for optimal performance and featuring smooth animations, dark mode support, and comprehensive project showcases.",
+      "A modern, responsive portfolio website showcasing my skills and projects. Built with Astro for optimal performance and featuring smooth animations, dark mode support, and a full project showcase section.",
     "projects.featured.2.title": "DrawTogether",
     "projects.featured.2.description":
       "A real-time collaborative drawing application built with React, TypeScript, and WebSockets. Users can create or join drawing rooms and collaborate in real-time on a shared canvas.",
     "projects.featured.3.title": "QRNav",
     "projects.featured.3.description":
       "QRNav is a Flutter application that allows users to scan QR codes and quickly interact with the scanned content. It supports URLs, contacts, locations, emails, calendar events, and plain text.",
+    "projects.featured.4.title": "GeminiFlow Chrome Extension",
+    "projects.featured.4.description":
+      "Chrome extension for web developers that integrates Gemini and helps resolve coding errors using four workflow techniques for LLM agents.",
+    "projects.featured.5.title": "GreenDrive - EV Charging Station Mobile App",
+    "projects.featured.5.description":
+      "Flutter mobile app for EV owners to find charging stations, plan routes, and connect with the EV community.",
+    "projects.featured.6.title": "PyTorrent System using Python Sockets",
+    "projects.featured.6.description":
+      "Torrent-like system built with Python sockets for peer-to-peer file sharing.",
+    "projects.featured.7.title": "Rubik's Cube Simulator",
+    "projects.featured.7.description":
+      "Java Rubik's Cube simulator with a graphical interface, move controls, solution guidance, and progress saving.",
     "projects.other.1.title": "ClinicaUNA Management System",
     "projects.other.1.description":
       "Comprehensive clinic management system for Universidad Nacional de Costa Rica. Features patient management, appointment scheduling, medical records, and an administrative dashboard with role-based access control.",
@@ -258,15 +285,18 @@ export const ui = {
     "projects.other.6.title": "Advanced JavaScript Calculator",
     "projects.other.6.description":
       "Full-featured calculator with scientific functions, memory operations, and history tracking. Implements proper order of operations and robust error handling.",
-    "projects.pending.1.title": "Live Markdown Previewer",
+    "projects.pending.1.title": "Job Tracker",
     "projects.pending.1.description":
-      "Real-time Markdown editor and previewer with syntax highlighting, split view, and export support. Supports GitHub Flavored Markdown.",
+      "A web app for managing job openings, applications, and hiring progress with a clear, productivity-focused interface.",
     "projects.page.kicker": "Archive",
     "projects.page.title": "All my projects",
     "projects.page.description":
       "A complete view of featured projects and in-progress work, preserving the same visual style and navigation experience as the main site.",
     "projects.page.backHome": "Back to home",
     "projects.page.pendingTitle": "Projects in progress",
+    "projects.pending.2.title": "Personal portfolio",
+    "projects.pending.2.description":
+      "Modern and responsive portfolio website with a blog, projects, and a navigation experience focused on performance and accessibility.",
     // Contact
     "contact.kicker": "04. What's next?",
     "contact.title": "Get In Touch",
