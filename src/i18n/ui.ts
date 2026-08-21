@@ -4,7 +4,7 @@ export const languages = {
 } as const;
 
 export const defaultLang = "es";
-export const showDefaultLang = false; // /es/about → /about (idioma por defecto oculto en URL)
+export const showDefaultLang = true; // /es/about → /about (idioma por defecto oculto en URL)
 
 export const ui = {
   es: {
@@ -325,10 +325,12 @@ export const ui = {
 // Si quisieras rutas distintas: es: { 'about': 'sobre-mi' }
 export const routes = {
   en: {
-    "sobre-mi": "about",
     blog: "blog",
+    projects: "projects",
   },
   es: {
-    about: "sobre-mi",
+    blog: "blog",
+    projects: "projects",
   },
 } as const;
+
