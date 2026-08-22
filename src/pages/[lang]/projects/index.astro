@@ -4,10 +4,17 @@ import Header from '@components/shared/Header.astro';
 import SocialSideBar from '@components/shared/SocialSideBar.astro';
 import Footer from '@components/shared/Footer.astro';
 import Projects from '@components/projects/Projects.astro';
-import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { useTranslations } from '@i18n/utils';
+import { languages } from '@i18n/ui';
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+export const prerender = true;
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as any);
 ---
 
 <Layout title={`${t('nav.projects')} | ${t('site.title')}`} description={t('site.description')}>

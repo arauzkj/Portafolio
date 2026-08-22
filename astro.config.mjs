@@ -16,7 +16,7 @@ export default defineConfig({
   integrations: [sitemap(
     {i18n: {
       defaultLocale: 'es',
-      locales: {'es': 'Español', 'en': 'English'},
+      locales: { es: 'es-ES', en: 'en-US' },
     }},
   ), icon()],
 
