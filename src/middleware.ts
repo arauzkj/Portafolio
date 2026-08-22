@@ -14,6 +14,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(`/${lang}/`);
   }
 
+  if (context.isPrerendered) {
+    return next();
+  }
+
   const isAuthed = await auth.api.getSession({
     headers: context.request.headers,
   });

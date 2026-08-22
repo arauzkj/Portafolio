@@ -1,0 +1,155 @@
+/* Shared CTA button effect */
+.fx-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 62%, transparent);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: color-mix(in srgb, var(--primary) 92%, white);
+  font-weight: 600;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, background-color 0.28s ease, color 0.28s ease;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 14%, transparent);
+  isolation: isolate;
+}
+
+.fx-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--primary) 30%, transparent), transparent 48%);
+  opacity: 0.4;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.fx-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 15%, color-mix(in srgb, var(--primary) 60%, white) 50%, transparent 85%);
+  opacity: 0;
+  transform: skewX(-20deg);
+  transition: left 0.65s ease, opacity 0.3s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fx-btn:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 92%, transparent);
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary) 28%, transparent),
+    0 14px 28px color-mix(in srgb, var(--background) 72%, transparent);
+}
+
+.fx-btn:hover::after {
+  left: 130%;
+  opacity: 0.75;
+}
+
+.fx-btn:active {
+  transform: translateY(0);
+}
+
+.fx-btn--ghost {
+  color: var(--foreground);
+  border-color: color-mix(in srgb, var(--border) 80%, transparent);
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+}
+
+.fx-btn--ghost:hover {
+  color: color-mix(in srgb, var(--primary) 92%, white);
+  border-color: color-mix(in srgb, var(--primary) 68%, transparent);
+}
+
+/* Creative submit button (terminal / login) */
+.creative-submit-btn {
+  color: color-mix(in srgb, var(--primary) 92%, white);
+  border: 1px solid color-mix(in srgb, var(--primary) 48%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--card) 84%, black), color-mix(in srgb, var(--card) 72%, black));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 16%, transparent),
+    0 14px 28px color-mix(in srgb, var(--background) 76%, transparent);
+  font-weight: 600;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.creative-submit-btn:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 78%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 30%, transparent),
+    0 18px 34px color-mix(in srgb, var(--background) 70%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.creative-submit-btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 88%, white);
+  outline-offset: 3px;
+}
+
+.btn-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--primary) 14%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 14%, transparent) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.btn-sheen {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 15%, color-mix(in srgb, var(--primary) 55%, white) 50%, transparent 85%);
+  opacity: 0.22;
+  transform: skewX(-24deg);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.creative-submit-btn:hover .btn-sheen {
+  left: 145%;
+}
+
+.btn-corners {
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 24%, transparent);
+  border-radius: 10px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.creative-submit-btn:active {
+  transform: translateY(0);
+  filter: saturate(1.1);
+}
+
+.terminal-btn-text {
+  position: relative;
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  animation: terminal-button-type 0.8s steps(18, end) 0.8s forwards;
+}
+
+@keyframes terminal-button-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
