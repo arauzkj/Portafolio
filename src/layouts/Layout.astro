@@ -12,10 +12,13 @@ interface Props {
 
 const { title, description, image, type, publishedDate } = Astro.props;
 
+import { getLangFromUrl } from '@i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

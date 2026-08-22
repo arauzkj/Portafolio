@@ -31,10 +31,13 @@ const formattedDate = post.publishedAt
 const readingTime = Math.ceil((post.content?.length ?? 0) / 1500);
 const [, langSegment] = Astro.url.pathname.split('/');
 const blogIndexHref = langSegment ? `/${langSegment}/blog` : '/blog';
+
+import { getLangFromUrl } from '@i18n/utils';
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

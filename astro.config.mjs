@@ -11,7 +11,7 @@ import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://arauzdev.netlify.app/',
+  site: 'https://arauzkj.dev',
 
   integrations: [sitemap(
     {i18n: {
