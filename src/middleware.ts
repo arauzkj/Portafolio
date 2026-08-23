@@ -11,7 +11,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const acceptLang = context.request.headers.get("accept-language") ?? "";
     const preferred = acceptLang.split(",")[0].split("-")[0].toLowerCase();
     const lang = supportedLangs.includes(preferred) ? preferred : defaultLang;
-    return context.redirect(`/${lang}/`);
+    return context.redirect(`/${lang}/`, 301);
   }
 
   if (context.isPrerendered) {

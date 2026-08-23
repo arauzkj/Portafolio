@@ -1,32 +1,65 @@
 ---
 import { getLangFromUrl } from '@i18n/utils';
-interface Props{
-    title: string;
-    description: string;
-    image?: string;
-    canonicalURL?: string;
-    type?: 'website' | 'article';
-    publishedDate?: string;
-    author?: string;
+
+export interface AlternateLink {
+  lang: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  publishedDate?: string;
+  author?: string;
+  alternateLinks?: AlternateLink[];
 }
 
 const {
-    title,
-    description,
-    image = '/preview.webp',
-    canonicalURL = Astro.url.href,
-    type = 'website',
-    publishedDate,
-    author = 'K.Arauz'
+  title,
+  description,
+  image = '/preview.webp',
+  canonicalURL,
+  type = 'website',
+  publishedDate,
+  author = 'K.Arauz',
+  alternateLinks,
 } = Astro.props;
 
 const siteName = 'Kevin Arauz';
 const fullTitle = `${title} | ${siteName}`;
-const baseUrl = Astro.site ?? Astro.url.origin;
-const absoluteCanonicalUrl = new URL(canonicalURL, baseUrl).href;
-const absoluteImage = new URL(image, baseUrl).href;
+
+// Base URL de producción garantizada (https://arauzkj.dev)
+const siteBase = Astro.site ? new URL(Astro.site).origin : Astro.url.origin;
+
+// Canonical URL normalizada siempre usando siteBase
+const currentPathname = canonicalURL
+  ? (canonicalURL.startsWith('http') ? new URL(canonicalURL).pathname : canonicalURL)
+  : Astro.url.pathname;
+const absoluteCanonicalUrl = new URL(currentPathname, siteBase).href;
+
+const absoluteImage = new URL(image, siteBase).href;
 const lang = getLangFromUrl(Astro.url);
 const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
+
+// Generar etiquetas hreflang para SEO internacional
+const supportedLangs = ['es', 'en'];
+const pathWithoutLang = currentPathname.replace(/^\/(es|en)(\/|$)/, '/');
+
+const alternates: AlternateLink[] = alternateLinks ?? supportedLangs.map((l) => {
+  const localizedPath = `/${l}${pathWithoutLang === '/' ? '/' : pathWithoutLang}`;
+  return {
+    lang: l,
+    href: new URL(localizedPath, siteBase).href,
+  };
+});
+
+const xDefaultHref = new URL(
+  `/es${pathWithoutLang === '/' ? '/' : pathWithoutLang}`,
+  siteBase
+).href;
 
 ---
 
@@ -35,6 +68,12 @@ const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
 <meta name="author" content={author} />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href={absoluteCanonicalUrl} />
+
+<!-- Alternates (hreflang) para Google Search Console -->
+{alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.lang} href={alt.href} />
+))}
+<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
