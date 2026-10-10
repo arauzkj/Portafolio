@@ -52,7 +52,7 @@ To run this project locally:
 
 ### Prerequisites
 - Node.js (v22.12.0 or higher)
-- npm or yarn
+- npm or pnpm
 
 ### Installation
 
@@ -64,12 +64,20 @@ cd Portafolio
 
 2. Install dependencies:
 ```bash
+# npm
 npm install
+
+# pnpm
+pnpm install
 ```
 
 3. Start the development server:
 ```bash
+# npm
 npm run dev
+
+# pnpm
+pnpm dev
 ```
 
 4. Open your browser and navigate to `http://localhost:4321`
@@ -77,7 +85,11 @@ npm run dev
 ### Build for Production
 
 ```bash
+# npm
 npm run build
+
+# pnpm
+pnpm build
 ```
 
 ### Drizzle Commands
@@ -86,16 +98,28 @@ Use these commands to manage your database schema with Drizzle Kit:
 
 ```bash
 # Generate SQL migrations from your schema
+# npm
 npx drizzle-kit generate
+# pnpm
+pnpm drizzle-kit generate
 
 # Apply migrations to the database
+# npm
 npx drizzle-kit migrate
+# pnpm
+pnpm drizzle-kit migrate
 
 # Push schema changes directly (without migration files)
+# npm
 npx drizzle-kit push
+# pnpm
+pnpm drizzle-kit push
 
 # Open Drizzle Studio
+# npm
 npx drizzle-kit studio
+# pnpm
+pnpm drizzle-kit studio
 ```
 
 
@@ -106,77 +130,117 @@ The built site will be in the `dist/` folder.
 ## 📁 Project Structure
 
 ```
-/
-├── public/
-│   └── robots.txt
-├── src/
-│   ├── middleware.ts
-│   ├── assets/
-│   ├── components/
-│   │   ├── LanguajePicker.astro
-│   │   ├── SEO.astro
-│   │   ├── dashboard/
-│   │   ├── landingpage/
-│   │   │   ├── About.astro
-│   │   │   ├── Contact.astro
-│   │   │   ├── Expericence.astro
-│   │   │   ├── Footer.astro
-│   │   │   ├── Header.astro
-│   │   │   ├── Hero.astro
-│   │   │   ├── Projects.astro
-│   │   │   └── SocialSideBar.astro
-│   │   ├── login/
-│   │   │   ├── BackgroundEffects.astro
-│   │   │   ├── LoginCard.astro
-│   │   │   └── LoginForm.astro
-│   │   └── ui/
-│   │       ├── Button.astro
-│   │       └── Input.astro
-│   ├── content/
-│   │   ├── en/
-│   │   │   └── hello-world.md
-│   │   └── es/
-│   │       └── hola-mundo.md
-│   ├── db/
-│   │   ├── index.ts
-│   │   ├── loader.ts
-│   │   └── schema.ts
-│   ├── i18n/
-│   │   ├── ui.ts
-│   │   └── utils.ts
-│   ├── layouts/
-│   │   ├── BlogPost.astro
-│   │   └── Layout.astro
-│   ├── lib/
-│   │   ├── auth-client.ts
-│   │   └── auth.ts
-│   ├── loaders/
-│   │   └── blogApiLoader.ts
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── [lang]/
-│   │   │   ├── index.astro
-│   │   │   ├── blog/
-│   │   │   │   ├── [slug].astro
-│   │   │   │   └── index.astro
-│   │   │   ├── login/
-│   │   │   │   └── index.astro
-│   │   │   └── projects/
-│   │   │       └── index.astro
-│   │   └── api/
-│   │       ├── hello.ts
-│   │       └── auth/
-│   │           └── [...all].ts
-│   ├── styles/
-│   │   └── global.css
-│   └── content.config.ts
-├── env.d.ts
-├── LICENSE
-├── README.md
-├── astro.config.mjs
-├── drizzle.config.ts
-├── tsconfig.json
-└── package.json
+└── 📁Portafolio
+    └── 📁public
+        ├── favicon.ico
+        ├── favicon.svg
+        ├── placeholder.svg
+        ├── preview.webp
+        ├── robots.txt
+    └── 📁src
+        └── 📁assets
+            ├── hello_there.mp4
+            ├── obi-wan-hello-there.mp3
+        └── 📁components
+            └── 📁blog
+            └── 📁dashboard
+                ├── Sidebar.astro
+            └── 📁landingpage
+                ├── About.astro
+                ├── Contact.astro
+                ├── Expericence.astro
+                ├── Hero.astro
+                ├── Projects.astro
+            └── 📁login
+                ├── BackgroundEffects.astro
+                ├── LoginCard.astro
+                ├── LoginForm.astro
+            └── 📁projects
+                ├── Projects.astro
+            └── 📁shared
+                ├── Button.astro
+                ├── Footer.astro
+                ├── GradientBackground.astro
+                ├── Header.astro
+                ├── Input.astro
+                ├── SocialSideBar.astro
+            ├── LanguajePicker.astro
+            ├── SEO.astro
+        └── 📁content
+            └── 📁en
+                ├── hello-world.md
+            └── 📁es
+                ├── hola-mundo.md
+        └── 📁db
+            ├── index.ts
+            ├── schema.ts
+        └── 📁i18n
+            ├── ui.ts
+            ├── utils.ts
+        └── 📁layouts
+            ├── BlogPostLayout.astro
+            ├── DashboardLayout.astro
+            ├── Layout.astro
+        └── 📁lib
+            ├── auth-client.ts
+            ├── auth.ts
+        └── 📁loaders
+            ├── blogApiLoader.ts
+        └── 📁pages
+            └── 📁[lang]
+                └── 📁blog
+                    ├── [slug].astro
+                    ├── index.astro
+                └── 📁dashboard
+                    └── 📁post
+                        └── 📁edit
+                            ├── index.astro
+                        └── 📁new
+                            ├── index.astro
+                    └── 📁settings
+                        ├── index.astro
+                    ├── index.astro
+                └── 📁login
+                    ├── index.astro
+                └── 📁projects
+                    ├── index.astro
+                ├── index.astro
+            └── 📁api
+                └── 📁auth
+                    ├── [...all].ts
+                └── 📁posts
+                    ├── [id].ts
+                    ├── index.ts
+                ├── hello.ts
+            ├── index.astro
+        └── 📁styles
+            └── 📁components
+                ├── blog.css
+                ├── buttons.css
+                ├── login.css
+            ├── animations.css
+            ├── base.css
+            ├── global.css
+            ├── variables.css
+        ├── content.config.ts
+        ├── middleware.ts
+    └── 📁test
+    ├── .env
+    ├── .gitattributes
+    ├── .gitignore
+    ├── AGENTS.md
+    ├── astro.config.mjs
+    ├── CLAUDE.md
+    ├── drizzle.config.ts
+    ├── env.d.ts
+    ├── LICENSE
+    ├── package-lock.json
+    ├── package.json
+    ├── pnpm-lock.yaml
+    ├── pnpm-workspace.yaml
+    ├── README.md
+    ├── tsconfig.json
+    └── vitest.config.ts
 ```
 
 This layout follows Astro conventions:
