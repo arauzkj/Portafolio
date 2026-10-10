@@ -27,3 +27,5 @@ pnpm-debug.log*
 .netlify
 
 drizzle
+# Vitest reports and artifacts
+.vitest/
