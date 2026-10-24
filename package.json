@@ -13,8 +13,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@astrojs/netlify": "^8.2.10",
+    "@astrojs/markdown-satteri": "^0.4.5",
     "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^11.0.16",
     "@better-auth/drizzle-adapter": "^1.7.12",
     "@iconify-json/devicon": "^1.2.71",
     "@iconify-json/lucide": "^1.2.147",
