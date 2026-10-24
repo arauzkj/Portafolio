@@ -27,9 +27,11 @@ export const prerender = false;
 >
   <ClientRouter />
 
-  <div class="flex">
+  <div class="dashboard-shell">
+    <div class="dashboard-glow dashboard-glow--one"></div>
+    <div class="dashboard-glow dashboard-glow--two"></div>
     <Sidebar user={user} />
-    <main class="ml-64 min-h-screen flex-1 p-8" transition:animate="fade">
+    <main class="dashboard-main" transition:animate="fade">
       <slot />
     </main>
   </div>
