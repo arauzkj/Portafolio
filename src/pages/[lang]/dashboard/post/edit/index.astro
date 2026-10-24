@@ -1,9 +1,36 @@
 ---
 import DashboardLayout from "@layouts/DashboardLayout.astro";
+import { getPostsByAuthor } from '@lib/posts';
+
+const lang = Astro.params.lang === 'en' ? 'en' : 'es';
+const posts = await getPostsByAuthor(Number(Astro.locals.user!.id));
 
 ---
 
 
 <DashboardLayout title="Dashboard" description="Panel principal">
-  <h1>Edit</h1>
+  <section class="dashboard-page">
+    <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="dashboard-eyebrow">CMS / Library</p>
+        <h1 class="dashboard-title">{lang === 'es' ? 'Publicaciones' : 'Posts'}</h1>
+        <p class="dashboard-subtitle">{lang === 'es' ? 'Administra tus borradores y publicaciones.' : 'Manage your drafts and published posts.'}</p>
+      </div>
+      <a href={`/${lang}/dashboard/post/new`} class="dashboard-button">+ {lang === 'es' ? 'Nueva publicación' : 'New post'}</a>
+    </div>
+    {posts.length ? (
+      <div class="dashboard-panel">
+        {posts.map((post) => (
+          <article class="dashboard-post">
+            <div>
+              <p class:list={['dashboard-status', { 'dashboard-status--draft': !post.published }]}>{post.published ? (lang === 'es' ? 'PUBLICADO' : 'PUBLISHED') : (lang === 'es' ? 'BORRADOR' : 'DRAFT')}</p>
+              <h2 class="dashboard-post__title">{post.title}</h2>
+              <p class="dashboard-post__meta">/{post.locale}/blog/{post.slug}</p>
+            </div>
+            <a href={`/${lang}/dashboard/post/edit/${post.id}`} class="dashboard-button dashboard-button--outline">{lang === 'es' ? 'Editar' : 'Edit'}</a>
+          </article>
+        ))}
+      </div>
+    ) : <div class="dashboard-panel p-8 text-center text-muted-foreground">{lang === 'es' ? 'Todavía no has creado publicaciones.' : 'You have not created any posts yet.'}</div>}
+  </section>
 </DashboardLayout>

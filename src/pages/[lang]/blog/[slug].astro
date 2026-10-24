@@ -1,44 +1,38 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BlogPost from '@layouts/BlogPostLayout.astro';
-export const prerender = true;
+import DatabasePostContent from '@components/blog/DatabasePostContent.astro';
+import { getPublishedPost } from '@lib/posts';
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts
-    .map((post) => {
-      const [lang, ...slugParts] = post.id.split('/');
-      const slug = slugParts.join('/');
+export const prerender = false;
 
-      if (!lang || !slug) return null;
+const lang = Astro.params.lang === 'en' ? 'en' : 'es';
+const slug = Astro.params.slug ?? '';
+const markdownPost = (await getCollection('blog', ({ data }) => !data.draft))
+  .find((post) => post.id === `${lang}/${slug}`);
+const databasePost = markdownPost ? null : await getPublishedPost(slug, lang);
 
-      return {
-        params: { lang, slug },
-        props: { post },
-      };
-    })
-    .filter(Boolean);
-}
+if (!markdownPost && !databasePost) return Astro.redirect(`/${lang}/blog`);
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content } = markdownPost ? await render(markdownPost) : { Content: null };
+const post = markdownPost ?? databasePost!;
 
 // Adaptamos los datos al formato que espera BlogPost.astro
 const postData = {
-  id:          0,
-  slug:        post.id,
-  title:       post.data.title,
-  description: post.data.description,
-  coverImage:  post.data.coverImage ?? null,
-  tags:        post.data.tags,
-  publishedAt: post.data.publishedAt,
-  published:   !(post.data.draft ?? false),
-  createdAt:   post.data.createdAt ?? null,
-  updatedAt:   post.data.updatedAt ?? null,
-  content:     post.body ?? '', // solo para el reading time
+  id:          markdownPost ? 0 : databasePost!.id,
+  slug:        markdownPost ? markdownPost.id : databasePost!.slug,
+  title:       markdownPost ? markdownPost.data.title : databasePost!.title,
+  description: markdownPost ? markdownPost.data.description : databasePost!.description,
+  coverImage:  markdownPost ? markdownPost.data.coverImage ?? null : databasePost!.coverImage,
+  tags:        markdownPost ? markdownPost.data.tags : databasePost!.tags,
+  publishedAt: markdownPost ? markdownPost.data.publishedAt : databasePost!.publishedAt,
+  published:   true,
+  createdAt:   markdownPost ? markdownPost.data.createdAt ?? null : databasePost!.createdAt,
+  updatedAt:   markdownPost ? markdownPost.data.updatedAt ?? null : databasePost!.updatedAt,
+  content:     markdownPost ? markdownPost.body ?? '' : databasePost!.content,
 };
 ---
 
 <BlogPost post={postData}>
-  <Content />
+  {markdownPost ? <Content /> : <DatabasePostContent content={databasePost!.content} />}
 </BlogPost>

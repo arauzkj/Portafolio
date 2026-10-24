@@ -1,8 +1,45 @@
 ---
-import DashboardLayout from "@layouts/DashboardLayout.astro"
+import DashboardLayout from "@layouts/DashboardLayout.astro";
+import { getPostsByAuthor } from "@lib/posts";
+
+const lang = Astro.params.lang === "en" ? "en" : "es";
+const posts = await getPostsByAuthor(Number(Astro.locals.user!.id));
+const published = posts.filter((post) => post.published).length;
+const drafts = posts.length - published;
 ---
 
 <DashboardLayout title="Dashboard" description="Panel principal">
-  <h1 class="text-2xl font-semibold text-foreground">Dashboard</h1>
-  <p class="text-muted-foreground">Contenido del dashboard aquí...</p>
+  <section class="dashboard-page">
+    <p class="dashboard-eyebrow">CMS / Dashboard</p>
+    <h1 class="dashboard-title">
+      {lang === "es" ? "Tu espacio de escritura" : "Your writing space"}
+    </h1>
+    <p class="dashboard-subtitle">
+      {
+        lang === "es"
+          ? "Crea borradores y publica artículos sin perder el control de tu contenido."
+          : "Create drafts and publish articles while keeping control of your content."
+      }
+    </p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      <div class="dashboard-stat">
+        <p class="dashboard-stat__label">
+          {lang === "es" ? "Total de artículos" : "Total articles"}
+        </p><p class="dashboard-stat__value">{posts.length}</p>
+      </div>
+      <div class="dashboard-stat dashboard-stat--primary">
+        <p class="dashboard-stat__label">
+          {lang === "es" ? "Publicados" : "Published"}
+        </p><p class="dashboard-stat__value">{published}</p>
+      </div>
+      <div class="dashboard-stat">
+        <p class="dashboard-stat__label">
+          {lang === "es" ? "Borradores" : "Drafts"}
+        </p><p class="dashboard-stat__value">{drafts}</p>
+      </div>
+    </div>
+    <a href={`/${lang}/dashboard/post/new`} class="dashboard-button mt-8"
+      >+ {lang === "es" ? "Nueva publicación" : "New post"}</a
+    >
+  </section>
 </DashboardLayout>

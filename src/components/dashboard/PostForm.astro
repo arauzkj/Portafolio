@@ -1,0 +1,106 @@
+---
+import type { BlogPost } from '@lib/posts';
+
+interface Props {
+  post?: BlogPost;
+  lang: 'es' | 'en';
+}
+
+const { post, lang } = Astro.props;
+const labels = lang === 'es'
+  ? { title: 'Nueva publicación', save: 'Guardar publicación', publishing: 'Guardando...', success: 'Publicación guardada.', error: 'No fue posible guardar la publicación.' }
+  : { title: 'New post', save: 'Save post', publishing: 'Saving...', success: 'Post saved.', error: 'Could not save the post.' };
+---
+
+<section class="dashboard-page" style="max-width: 62rem;">
+  <div class="mb-8">
+    <a href={`/${lang}/dashboard/post/edit`} class="dashboard-eyebrow">← {lang === 'es' ? 'Todas las publicaciones' : 'All posts'}</a>
+    <h1 class="dashboard-title">{post ? post.title : labels.title}</h1>
+    <p class="dashboard-subtitle">{lang === 'es' ? 'Escribe en Markdown. Se verá igual que los artículos locales del blog.' : 'Write in Markdown. It will look like local blog articles.'}</p>
+  </div>
+
+  <form id="post-form" data-post-id={post?.id} data-lang={lang} class="editor-card space-y-6">
+    <div class="editor-grid">
+      <label class="editor-field">
+        {lang === 'es' ? 'Título' : 'Title'}
+        <input name="title" required value={post?.title} />
+      </label>
+      <label class="editor-field">
+        Slug
+        <input name="slug" value={post?.slug} placeholder="mi-publicacion" />
+      </label>
+    </div>
+    <label class="editor-field">
+      {lang === 'es' ? 'Descripción' : 'Description'}
+      <textarea name="description" required rows="3">{post?.description}</textarea>
+    </label>
+    <div class="editor-grid">
+      <label class="editor-field">
+        {lang === 'es' ? 'Imagen de portada (URL)' : 'Cover image (URL)'}
+        <input name="coverImage" type="url" value={post?.coverImage ?? ''} />
+      </label>
+      <label class="editor-field">
+        {lang === 'es' ? 'Etiquetas (separadas por coma)' : 'Tags (comma-separated)'}
+        <input name="tags" value={post?.tags.join(', ')} />
+      </label>
+    </div>
+    <label class="editor-field">
+      {lang === 'es' ? 'Contenido' : 'Content'}
+      <textarea name="content" required rows="16" class="editor-content">{post?.content}</textarea>
+    </label>
+    <label class="editor-toggle">
+      <input name="published" type="checkbox" checked={post?.published ?? false} />
+      {lang === 'es' ? 'Publicar ahora' : 'Publish now'}
+    </label>
+    <div class="flex flex-wrap items-center gap-4">
+      <button type="submit" class="dashboard-button">{labels.save}</button>
+      <p id="post-form-message" class="text-sm text-muted-foreground" role="status"></p>
+    </div>
+  </form>
+</section>
+
+<script define:vars={{ labels }}>
+  const form = document.querySelector<HTMLFormElement>('#post-form');
+  const message = document.querySelector<HTMLParagraphElement>('#post-form-message');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const postId = form.dataset.postId;
+    const payload = {
+      title: data.get('title'),
+      slug: data.get('slug'),
+      description: data.get('description'),
+      coverImage: data.get('coverImage'),
+      tags: String(data.get('tags') ?? '').split(','),
+      content: data.get('content'),
+      locale: form.dataset.lang,
+      published: data.get('published') === 'on',
+    };
+
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (button) {
+      button.disabled = true;
+      button.textContent = labels.publishing;
+    }
+
+    try {
+      const response = await fetch(postId ? `/api/posts/${postId}` : '/api/posts', {
+        method: postId ? 'PUT' : 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error);
+      if (message) message.textContent = labels.success;
+      if (!postId) window.location.assign(`/${form.dataset.lang}/dashboard/post/edit/${body.id}`);
+    } catch (error) {
+      if (message) message.textContent = error instanceof Error ? error.message : labels.error;
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = labels.save;
+      }
+    }
+  });
+</script>

@@ -1,7 +1,28 @@
 ---
 import DashboardLayout from "@layouts/DashboardLayout.astro";
+import { getLangFromUrl } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const user = Astro.locals.user!;
 ---
 
 <DashboardLayout title="Dashboard" description="Panel principal">
-  <h1>Settings</h1>
+  <section class="dashboard-page" style="max-width: 54rem;">
+    <p class="dashboard-eyebrow">CMS / Settings</p>
+    <h1 class="dashboard-title">{lang === 'es' ? 'Configuración' : 'Settings'}</h1>
+    <p class="dashboard-subtitle">{lang === 'es' ? 'Tu cuenta es la identidad que firma las publicaciones del CMS.' : 'Your account is the identity behind CMS publications.'}</p>
+
+    <div class="dashboard-panel mt-8 p-6">
+      <div class="flex items-center gap-4">
+        <div class="dashboard-profile__avatar h-12 w-12 text-base">{user.name?.charAt(0).toUpperCase() ?? 'A'}</div>
+        <div>
+          <p class="font-semibold text-foreground">{user.name}</p>
+          <p class="mt-1 text-sm text-muted-foreground">{user.email}</p>
+        </div>
+      </div>
+      <div class="mt-6 border-t border-border pt-5 text-sm leading-6 text-muted-foreground">
+        {lang === 'es' ? 'Los ajustes de contenido se gestionan desde el editor: idioma, estado de publicación, imagen de portada y etiquetas.' : 'Content settings are managed in the editor: language, publication status, cover image, and tags.'}
+      </div>
+    </div>
+  </section>
 </DashboardLayout>
