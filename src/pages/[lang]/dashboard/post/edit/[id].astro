@@ -1,0 +1,14 @@
+---
+import DashboardLayout from '@layouts/DashboardLayout.astro';
+import PostForm from '@components/dashboard/PostForm.astro';
+import { getPostByAuthor } from '@lib/posts';
+
+const lang = Astro.params.lang === 'en' ? 'en' : 'es';
+const post = await getPostByAuthor(Number(Astro.params.id), Number(Astro.locals.user!.id));
+
+if (!post) return Astro.redirect(`/${lang}/dashboard/post/edit`);
+---
+
+<DashboardLayout title="Dashboard" description="Panel principal">
+  <PostForm post={post} lang={lang} />
+</DashboardLayout>

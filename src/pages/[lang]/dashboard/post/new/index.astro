@@ -1,8 +1,11 @@
 ---
 import DashboardLayout from "@layouts/DashboardLayout.astro";
+import PostForm from '@components/dashboard/PostForm.astro';
+
+const lang = Astro.params.lang === 'en' ? 'en' : 'es';
 
 ---
 
 <DashboardLayout title="Dashboard" description="Panel principal">
-  <h1>New</h1>
+  <PostForm lang={lang} />
 </DashboardLayout>

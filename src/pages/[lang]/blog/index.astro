@@ -4,6 +4,7 @@ import Header from '@components/shared/Header.astro';
 import SocialSideBar from '@components/shared/SocialSideBar.astro';
 import Footer from '@components/shared/Footer.astro';
 import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '@lib/posts';
 import { useTranslations, useTranslatedPath, getLangFromUrl } from '@i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -12,16 +13,29 @@ const translatePath = useTranslatedPath(lang);
 
 const locale = lang === 'en' ? 'en-US' : 'es-CR';
 
-const posts = await getCollection('blog', ({ data }) => !data.draft);
-const localizedPosts = posts.filter((post) => post.id.startsWith(`${lang}/`));
+const markdownPosts = await getCollection('blog', ({ data }) => !data.draft);
+const databasePosts = await getPublishedPosts(lang);
+const localizedPosts = [
+  ...markdownPosts
+    .filter((post) => post.id.startsWith(`${lang}/`))
+    .map((post) => ({
+      slug: post.id.slice(`${lang}/`.length),
+      title: post.data.title,
+      description: post.data.description,
+      coverImage: post.data.coverImage,
+      tags: post.data.tags,
+      publishedAt: post.data.publishedAt,
+    })),
+  ...databasePosts,
+];
 const sorted = localizedPosts.sort((a, b) =>
-  (b.data.publishedAt?.valueOf() ?? 0) - (a.data.publishedAt?.valueOf() ?? 0)
+  (b.publishedAt?.valueOf() ?? 0) - (a.publishedAt?.valueOf() ?? 0)
 );
 
 const featuredPost = sorted[0];
 const regularPosts = sorted.slice(1);
 
-const formatDate = (date?: Date) =>
+const formatDate = (date?: Date | null) =>
   date
     ? date.toLocaleDateString(locale, {
         year: 'numeric',
@@ -59,11 +73,11 @@ const formatDate = (date?: Date) =>
 
       {featuredPost && (
         <article class="blog-feature-card reveal reveal-delay-1 mb-10 overflow-hidden rounded-2xl border border-primary/30 bg-card/70 shadow-[0_24px_70px_rgba(2,10,24,0.55)] md:mb-14">
-          {featuredPost.data.coverImage && (
+          {featuredPost.coverImage && (
             <div class="relative h-48 overflow-hidden border-b border-border/70 sm:h-64">
               <img
-                src={featuredPost.data.coverImage}
-                alt={featuredPost.data.title}
+                src={featuredPost.coverImage}
+                alt={featuredPost.title}
                 class="h-full w-full object-cover"
                 loading="lazy"
               />
@@ -77,21 +91,21 @@ const formatDate = (date?: Date) =>
             </p>
             <h2 class="text-2xl font-semibold leading-tight text-foreground md:text-3xl">
               <a
-                href={`/${lang}/blog/${featuredPost.id.split('/').pop()}`}
+                href={`/${lang}/blog/${featuredPost.slug}`}
                 class="transition-colors hover:text-primary"
               >
-                {featuredPost.data.title}
+                {featuredPost.title}
               </a>
             </h2>
             <p class="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              {featuredPost.data.description}
+              {featuredPost.description}
             </p>
 
             <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-              <time datetime={featuredPost.data.publishedAt?.toISOString()}>
-                {formatDate(featuredPost.data.publishedAt)}
+              <time datetime={featuredPost.publishedAt?.toISOString()}>
+                {formatDate(featuredPost.publishedAt)}
               </time>
-              {featuredPost.data.tags.slice(0, 3).map((tag) => (
+              {featuredPost.tags.slice(0, 3).map((tag) => (
                 <span class="rounded-full border border-border bg-background/55 px-2.5 py-1 font-mono text-[11px] text-primary/85">
                   #{tag}
                 </span>
@@ -99,7 +113,7 @@ const formatDate = (date?: Date) =>
             </div>
 
             <a
-              href={`/${lang}/blog/${featuredPost.id.split('/').pop()}`}
+              href={`/${lang}/blog/${featuredPost.slug}`}
               class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all duration-300 hover:translate-x-1"
             >
               {t('blog.readMore')}
@@ -123,25 +137,25 @@ const formatDate = (date?: Date) =>
               <article class="blog-card group rounded-2xl border border-border/80 bg-card/50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/55 hover:shadow-[0_20px_40px_rgba(2,10,24,0.45)]">
                 <div class="mb-3 flex items-center justify-between gap-3">
                   <time
-                    datetime={post.data.publishedAt?.toISOString()}
+                    datetime={post.publishedAt?.toISOString()}
                     class="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
                   >
-                    {formatDate(post.data.publishedAt)}
+                    {formatDate(post.publishedAt)}
                   </time>
-                  {post.data.tags[0] && (
+                  {post.tags[0] && (
                     <span class="rounded-full border border-primary/25 px-2.5 py-1 text-[11px] font-mono text-primary/85">
-                      #{post.data.tags[0]}
+                      #{post.tags[0]}
                     </span>
                   )}
                 </div>
 
                 <h3 class="text-lg font-semibold leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
-                  <a href={`/${lang}/blog/${post.id.split('/').pop()}`}>{post.data.title}</a>
+                  <a href={`/${lang}/blog/${post.slug}`}>{post.title}</a>
                 </h3>
-                <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{post.data.description}</p>
+                <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{post.description}</p>
 
                 <a
-                  href={`/${lang}/blog/${post.id.split('/').pop()}`}
+                  href={`/${lang}/blog/${post.slug}`}
                   class="mt-5 inline-flex items-center gap-1 text-sm text-primary/90 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary"
                 >
                   {t('blog.readMore')}

@@ -99,6 +99,22 @@
 .reveal-delay-4 { transition-delay: 400ms; }
 .reveal-delay-5 { transition-delay: 500ms; }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Hello There Easter Egg animations */
 @keyframes slideInDown {
   from {

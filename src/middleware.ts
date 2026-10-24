@@ -28,8 +28,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.locals.user = null;
     context.locals.session = null;
   }
-  if (context.url.pathname === "/dashboard" && !isAuthed) {
-    return context.redirect("/");
+  const dashboardMatch = context.url.pathname.match(/^\/(es|en)\/dashboard(?:\/|$)/);
+  if (dashboardMatch && !isAuthed) {
+    return context.redirect(`/${dashboardMatch[1]}/login`);
   }
 
   return next();

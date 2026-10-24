@@ -32,74 +32,70 @@ const lang = getLangFromUrl(Astro.url);
       publishedDate={publishedDate}
     />
     <meta name="generator" content={Astro.generator} />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
   <script>
-      // Scroll reveal animation
-      const revealElements = document.querySelectorAll('.reveal');
-      
-      const revealOnScroll = () => {
-        revealElements.forEach((el) => {
-          const elementTop = el.getBoundingClientRect().top;
-          const windowHeight = window.innerHeight;
-          
-          if (elementTop < windowHeight - 100) {
-            el.classList.add('active');
-          }
-        });
-      };
-      
-      window.addEventListener('scroll', revealOnScroll);
-      window.addEventListener('load', revealOnScroll);
-      
-      // Header scroll effect
-      const header = document.getElementById('main-header');
-      let lastScroll = 0;
-      
-      window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-        
-        if (header) {
-          if (currentScroll > 50) {
-            header.classList.add('bg-background/95', 'backdrop-blur-xs', 'border-b', 'border-border', 'shadow-sm', 'bg-black/50');
-          } else {
-            header.classList.remove('bg-background/95', 'backdrop-blur-xs', 'border-b', 'border-border', 'shadow-sm', 'bg-black/50');
-          }
-        }
-        
-        lastScroll = currentScroll;
-      });
-      
-      // Active section detection
-      const sections = ['about', 'experience', 'projects', 'contact'];
-      const navLinks = document.querySelectorAll('.nav-link');
-      
-      const setActiveSection = () => {
-        let current = '';
-        
-        sections.forEach((section) => {
-          const element = document.getElementById(section);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top <= 150 && rect.bottom >= 150) {
-              current = section;
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target);
             }
-          }
-        });
-        
-        navLinks.forEach((link) => {
-          const href = link.getAttribute('href');
-          if (href === `#${current}`) {
-            link.classList.add('text-primary');
-            link.classList.remove('text-muted-foreground');
-          } else {
-            link.classList.remove('text-primary');
-            link.classList.add('text-muted-foreground');
-          }
-        });
-      };
-      
-      window.addEventListener('scroll', setActiveSection);
-    </script>
+          });
+        },
+        { rootMargin: "0px 0px -100px" },
+      );
+
+      revealElements.forEach((element) => revealObserver.observe(element));
+    } else {
+      revealElements.forEach((element) => element.classList.add("active"));
+    }
+
+    const header = document.getElementById("main-header");
+    const sections = ["about", "experience", "projects", "contact"];
+    const navLinks = document.querySelectorAll(".nav-link");
+    let scrollFrame = 0;
+
+    const updateScrollState = () => {
+      scrollFrame = 0;
+
+      header?.classList.toggle(
+        "bg-background/95",
+        window.scrollY > 50,
+      );
+      header?.classList.toggle("backdrop-blur-xs", window.scrollY > 50);
+      header?.classList.toggle("border-b", window.scrollY > 50);
+      header?.classList.toggle("border-border", window.scrollY > 50);
+      header?.classList.toggle("shadow-sm", window.scrollY > 50);
+      header?.classList.toggle("bg-black/50", window.scrollY > 50);
+
+      let current = "";
+      sections.forEach((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) current = section;
+        }
+      });
+
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute("href")?.endsWith(`#${current}`);
+        link.classList.toggle("text-primary", isActive);
+        link.classList.toggle("text-muted-foreground", !isActive);
+      });
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollState);
+      },
+      { passive: true },
+    );
+    updateScrollState();
+  </script>
   </head>
   <body class="relative min-h-screen overflow-x-hidden bg-background text-foreground font-sans">
     <GradientBackground />
