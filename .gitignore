@@ -29,3 +29,4 @@ pnpm-debug.log*
 drizzle
 # Vitest reports and artifacts
 .vitest/
+.vercel
