@@ -14,13 +14,13 @@ const databasePost = markdownPost ? null : await getPublishedPost(slug, lang);
 
 if (!markdownPost && !databasePost) return Astro.redirect(`/${lang}/blog`);
 
-const { Content } = markdownPost ? await render(markdownPost) : { Content: null };
+const Content = markdownPost ? (await render(markdownPost)).Content : null;
 const post = markdownPost ?? databasePost!;
 
 // Adaptamos los datos al formato que espera BlogPost.astro
 const postData = {
   id:          markdownPost ? 0 : databasePost!.id,
-  slug:        markdownPost ? markdownPost.id : databasePost!.slug,
+  slug:        markdownPost ? markdownPost.id.slice(`${lang}/`.length) : databasePost!.slug,
   title:       markdownPost ? markdownPost.data.title : databasePost!.title,
   description: markdownPost ? markdownPost.data.description : databasePost!.description,
   coverImage:  markdownPost ? markdownPost.data.coverImage ?? null : databasePost!.coverImage,
@@ -34,5 +34,5 @@ const postData = {
 ---
 
 <BlogPost post={postData}>
-  {markdownPost ? <Content /> : <DatabasePostContent content={databasePost!.content} />}
+  {Content ? <Content /> : <DatabasePostContent content={databasePost!.content} />}
 </BlogPost>

@@ -1,123 +1,43 @@
 ---
+import Header from '@components/shared/Header.astro';
+import SocialSideBar from '@components/shared/SocialSideBar.astro';
+import Footer from '@components/shared/Footer.astro';
+import Layout from '@layouts/Layout.astro';
+
+type BlogLayoutPost = { slug: string; title: string; description: string; coverImage?: string | null; tags?: string[]; publishedAt?: Date | null; content?: string; };
+interface Props { post: BlogLayoutPost; }
+
 const { post } = Astro.props;
-import SEO from "../components/SEO.astro";
-
-type BlogLayoutPost = {
-  id?: number;
-  slug: string;
-  title: string;
-  description: string;
-  coverImage?: string | null;
-  tags?: string[];
-  publishedAt?: Date | null;
-  published?: boolean;
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
-  content?: string;
-};
-
-interface Props {
-  post: BlogLayoutPost;
-}
-
-const formattedDate = post.publishedAt
-  ? new Date(post.publishedAt).toLocaleDateString("es-CR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  : null;
-
-const readingTime = Math.ceil((post.content?.length ?? 0) / 1500);
-const [, langSegment] = Astro.url.pathname.split('/');
-const blogIndexHref = langSegment ? `/${langSegment}/blog` : '/blog';
-
-import { getLangFromUrl } from '@i18n/utils';
-const lang = getLangFromUrl(Astro.url);
+const lang = Astro.url.pathname.split('/')[1] === 'en' ? 'en' : 'es';
+const locale = lang === 'en' ? 'en-US' : 'es-CR';
+const labels = lang === 'en'
+  ? { back: 'Back to the blog', reading: 'min read', article: 'Article' }
+  : { back: 'Volver al blog', reading: 'min de lectura', article: 'Artículo' };
+const formattedDate = post.publishedAt?.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+const readingTime = Math.max(1, Math.ceil((post.content?.trim().split(/\s+/).length ?? 0) / 200));
+const blogIndexHref = `/${lang}/blog`;
 ---
 
-<!doctype html>
-<html lang={lang}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <SEO
-      title={post.title}
-      description={post.description}
-      image={post.coverImage ?? "/preview.png"}
-      type="article"
-      publishedDate={post.publishedAt?.toISOString()}
-    />
-
-    <!-- JSON-LD para Google -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: post.title,
-        description: post.description,
-        image: new URL(post.coverImage ?? "/preview.png", Astro.site).href,
-        author: {
-          "@type": "Person",
-          name: "Tu Nombre",
-          url: Astro.site,
-        },
-        datePublished: post.publishedAt?.toISOString(),
-        dateModified: post.updatedAt?.toISOString(),
-        url: Astro.url.href,
-        keywords: post.tags?.join(", "),
-      })}
-    />
-  </head>
-  <body>
-    <main>
-      <article>
-
-        <!-- Header del post -->
-        <header>
-          {post.coverImage && (
-            <img src={post.coverImage} alt={post.title} />
-          )}
-
-          <div>
-            {post.tags && post.tags.length > 0 && (
-              <ul>
-                {post.tags.map(tag => (
-                  <li>
-                    <a href={`/blog/tags/${tag}`}>#{tag}</a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <h1>{post.title}</h1>
-          <p>{post.description}</p>
-
-          <div>
-            {formattedDate && (
-              <time datetime={post.publishedAt?.toISOString()}>
-                {formattedDate}
-              </time>
-            )}
-            <span>{readingTime} min de lectura</span>
-          </div>
-        </header>
-
-        <!-- Contenido del post (el <Content /> de Astro va aquí) -->
-        <div class="prose">
-          <slot />
+<Layout title={post.title} description={post.description} image={post.coverImage ?? '/preview.webp'} type="article" publishedDate={post.publishedAt?.toISOString()}>
+  <Header />
+  <SocialSideBar />
+  <main class="blog-post">
+    <article class="blog-post__article">
+      <a href={blogIndexHref} class="blog-post__back"><span aria-hidden="true">←</span>{labels.back}</a>
+      <header class="blog-post__header">
+        <p class="blog-post__eyebrow">{labels.article}</p>
+        {post.tags && post.tags.length > 0 && <ul class="blog-post__tags" aria-label="Tags">{post.tags.map((tag) => <li>#{tag}</li>)}</ul>}
+        <h1>{post.title}</h1>
+        <p class="blog-post__description">{post.description}</p>
+        <div class="blog-post__meta">
+          {formattedDate && <time datetime={post.publishedAt?.toISOString()}>{formattedDate}</time>}
+          <span aria-hidden="true">·</span><span>{readingTime} {labels.reading}</span>
         </div>
-
-        <!-- Footer del post -->
-        <footer>
-          <a href={blogIndexHref}>← Volver al blog</a>
-        </footer>
-
-      </article>
-    </main>
-  </body>
-</html>
+      </header>
+      {post.coverImage && <figure class="blog-post__cover"><img src={post.coverImage} alt={post.title} /></figure>}
+      <div class="blog-prose"><slot /></div>
+      <footer class="blog-post__footer"><a href={blogIndexHref} class="blog-post__back"><span aria-hidden="true">←</span>{labels.back}</a></footer>
+    </article>
+  </main>
+  <Footer />
+</Layout>

@@ -6,6 +6,14 @@ const lang = Astro.params.lang === "en" ? "en" : "es";
 const posts = await getPostsByAuthor(Number(Astro.locals.user!.id));
 const published = posts.filter((post) => post.published).length;
 const drafts = posts.length - published;
+const localePosts = posts.filter((post) => post.locale === lang);
+const previewPosts = localePosts.slice(0, 4);
+const formatDate = (date: Date | null) =>
+  date?.toLocaleDateString(lang === "en" ? "en-US" : "es-CR", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }) ?? "";
 ---
 
 <DashboardLayout title="Dashboard" description="Panel principal">
@@ -41,5 +49,72 @@ const drafts = posts.length - published;
     <a href={`/${lang}/dashboard/post/new`} class="dashboard-button mt-8"
       >+ {lang === "es" ? "Nueva publicación" : "New post"}</a
     >
+
+    <section class="dashboard-preview mt-14" aria-labelledby="dashboard-preview-title">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="dashboard-eyebrow">{lang === "es" ? "Vista editorial" : "Editorial preview"}</p>
+          <h2 id="dashboard-preview-title" class="dashboard-section-title">
+            {lang === "es" ? "Así se verá tu blog" : "This is how your blog will look"}
+          </h2>
+          <p class="dashboard-subtitle">
+            {
+              lang === "es"
+                ? "Revisa tus publicaciones antes de compartirlas con tus lectores."
+                : "Review your posts before sharing them with your readers."
+            }
+          </p>
+        </div>
+        <a href={`/${lang}/dashboard/post/edit`} class="dashboard-button dashboard-button--outline">
+          {lang === "es" ? "Ver biblioteca" : "View library"}
+        </a>
+      </div>
+
+      {previewPosts.length > 0 ? (
+        <div class="dashboard-preview__grid">
+          {previewPosts.map((post, index) => (
+            <article class:list={["dashboard-preview-card", { "dashboard-preview-card--featured": index === 0 }]}>
+              {post.coverImage && (
+                <div class="dashboard-preview-card__image">
+                  <img src={post.coverImage} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="dashboard-preview-card__body">
+                <div class="flex items-center justify-between gap-3">
+                  <span class:list={["dashboard-status", { "dashboard-status--draft": !post.published }]}>
+                    {post.published
+                      ? lang === "es" ? "PUBLICADO" : "PUBLISHED"
+                      : lang === "es" ? "BORRADOR" : "DRAFT"}
+                  </span>
+                  <time class="dashboard-post__meta" datetime={post.publishedAt?.toISOString()}>
+                    {formatDate(post.publishedAt)}
+                  </time>
+                </div>
+                <h3 class="dashboard-preview-card__title">{post.title}</h3>
+                <p class="dashboard-preview-card__description">{post.description}</p>
+                <a
+                  href={post.published
+                    ? `/${lang}/blog/${post.slug}`
+                    : `/${lang}/dashboard/post/edit/${post.id}`}
+                  class="dashboard-preview-card__link"
+                >
+                  {post.published
+                    ? lang === "es" ? "Abrir artículo" : "Open article"
+                    : lang === "es" ? "Continuar editando" : "Continue editing"}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="dashboard-preview__empty">
+          <p>{lang === "es" ? "Todavía no tienes publicaciones en este idioma." : "You do not have posts in this language yet."}</p>
+          <a href={`/${lang}/dashboard/post/new`} class="dashboard-button">
+            {lang === "es" ? "Crear mi primer artículo" : "Create my first article"}
+          </a>
+        </div>
+      )}
+    </section>
   </section>
 </DashboardLayout>
